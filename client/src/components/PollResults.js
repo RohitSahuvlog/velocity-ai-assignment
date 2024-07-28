@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchPollResults } from '../api';
+import { AuthContext } from '../context/AuthContext';
 
 const Container = styled.div`
     padding: 40px;
@@ -42,6 +43,7 @@ const Loading = styled.div`
 
 const PollResults = () => {
     const { id } = useParams();
+    const { token } = useContext(AuthContext);
     const [poll, setPoll] = useState({});
 
     useEffect(() => {
@@ -50,7 +52,9 @@ const PollResults = () => {
             console.log(data.data)
             setPoll(data.data);
         };
-        // getPollResults();
+        if (token) {
+            getPollResults();
+        }
     }, [id]);
 
     if (!poll) return <Loading>Loading...</Loading>;

@@ -88,7 +88,6 @@ function HomePage() {
                     <VotePoll key={poll._id} poll={poll} />
                 ))}
             </PollList>
-            <PollResults />
 
         </Container>
     );
