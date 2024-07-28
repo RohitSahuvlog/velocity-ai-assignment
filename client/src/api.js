@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: "http://localhost:5000/api" });
+const API = axios.create({ baseURL: "https://velocity-ai-assignment.onrender.com/api" });
 
 
 export const register = (email, password, username) => API.post('/auth/register', { email, password, username });

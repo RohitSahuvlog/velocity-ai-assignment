@@ -7,7 +7,7 @@ const CommentSection = ({ pollId }) => {
     const { user } = useContext(AuthContext);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const socket = io('http://localhost:5000');
+    const socket = io('https://velocity-ai-assignment.onrender.com');
 
     useEffect(() => {
         const getComments = async () => {
