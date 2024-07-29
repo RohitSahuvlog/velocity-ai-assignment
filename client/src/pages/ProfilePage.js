@@ -160,11 +160,9 @@ function ProfilePage() {
         if (profilePicture) {
             formData.append('profilePicture', profilePicture);
         }
-        formData.append('username', username);
-        if (username !== user.username) {
-            const { data } = await uploadProfile(formData);
-            setUser(prevUser => ({ ...prevUser, username: data.username }));
-        }
+        formData.append('username', username || user?.username);
+        const { data } = await uploadProfile(formData);
+        setUser(prevUser => ({ ...prevUser, username: data.username }));
         setIsEditing(false);
     };
 

@@ -82,7 +82,7 @@ const VoteDiv = styled.div`
 
 const LikeButton = styled.button`
     padding: 5px 10px;
-    background-color: #28a745;
+    background-color: ${({ disabled }) => (disabled ? '#ccc' : '#28a745')};
     color: white;
     border: none;
     border-radius: 5px;
@@ -126,7 +126,7 @@ const Commentsdiv = styled.div`
     overflow-y: auto;
 `;
 
-export const socket = io('https://velocity-ai-assignment.onrender.com/', {
+export const socket = io('http://localhost:5000/', {
     query: { token: localStorage.getItem('token') }
 });
 
@@ -141,12 +141,14 @@ const VotePoll = ({ poll }) => {
     const [comments, setComments] = useState(poll.comments || []);
     const [newComment, setNewComment] = useState('');
     const [showComments, setShowComments] = useState(false);
+    const [hasLiked, setHasLiked] = useState(false);
 
     useEffect(() => {
         if (user && user.votedPolls.some(votedPoll => votedPoll._id === poll._id)) {
             setHasVoted(true);
             setShowResults(true);
         }
+
 
         socket.on('pollUpdated', (updatedPoll) => {
             if (updatedPoll._id === poll._id) {
@@ -160,6 +162,7 @@ const VotePoll = ({ poll }) => {
         socket.on('likeUpdated', (data) => {
             if (data.pollId === poll._id) {
                 setLikes(data.likes);
+                setHasLiked(true);
             }
         });
 
@@ -211,7 +214,7 @@ const VotePoll = ({ poll }) => {
                     <span>{totalVotes} votes</span>
                 </PollInfo>
                 <div>
-                    <LikeButton onClick={handleLike}>Like ({likes})</LikeButton>
+                    <LikeButton onClick={handleLike} disabled={hasLiked}>Like ({likes})</LikeButton>
                 </div>
             </PollDetails>
             {!showResults ? (

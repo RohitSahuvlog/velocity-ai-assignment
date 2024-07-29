@@ -42,16 +42,29 @@ exports.profile = async (req, res) => {
     }
 };
 
-exports.UploadUserInfo = async (req, res) => {
+exports.uploadProfile = async (req, res) => {
     try {
+        const { username } = req.fields;
+        let profilePictureUrl = null;
+
+        if (req.files && req.files.profilePicture) {
+            const file = req.files.profilePicture.path;
+            const result = await cloudinary.uploader.upload(file);
+            profilePictureUrl = result.secure_url;
+        }
+
         const user = await User.findById(req.user.id);
-        const result = await cloudinary.uploader.upload(req.file.path);
-        user.avatar = result.secure_url;
-        user.username = req.body.username;
-        user.email = req.body.email;
+        user.username = username || "profile";
+        if (profilePictureUrl) {
+            user.profilePicture = profilePictureUrl;
+        }
         await user.save();
-        res.json(user);
+
+        res.json({
+            username: user.username,
+            profilePicture: user.profilePicture,
+        });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-}
+};

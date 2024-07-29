@@ -4,6 +4,10 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const setupSocket = require('./socket');
 const bodyParser = require('body-parser');
+const formidable = require('express-formidable');
+
+
+require('dotenv').config()
 
 const app = express();
 const server = http.createServer(app);
@@ -13,6 +17,9 @@ connectDB();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(formidable({
+    multiples: true,
+}));
 
 
 // Set io on the app instance
