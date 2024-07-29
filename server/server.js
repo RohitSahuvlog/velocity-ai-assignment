@@ -4,7 +4,6 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const setupSocket = require('./socket');
 const bodyParser = require('body-parser');
-const formidable = require('express-formidable');
 
 
 require('dotenv').config()
@@ -17,14 +16,11 @@ connectDB();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(formidable({
-    multiples: true,
-}));
 
 
 // Set io on the app instance
 app.set('io', io);
-app.get("/test", function (req, res) {
+app.use("/test", function (req, res) {
     res.send("Hello World");
 });
 
