@@ -4,6 +4,7 @@ import { login } from '../api';
 import { toaster } from 'evergreen-ui';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -97,7 +98,9 @@ function LoginPage() {
                         required
                     />
                     <Button type="submit">Login</Button>
+
                 </Form>
+                <Link to="/register">Don't have an account? Register here.</Link>
             </FormWrapper>
         </Container>
     );

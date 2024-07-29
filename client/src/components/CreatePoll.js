@@ -85,9 +85,6 @@ const CreatePoll = () => {
         e.preventDefault();
         const newPoll = { question, options };
         socket.emit('createPoll', newPoll);
-        socket.on('pollCreated', (poll) => {
-            setPolls(poll);
-        });
         setQuestion('');
         setOptions(['', '']);
     };
