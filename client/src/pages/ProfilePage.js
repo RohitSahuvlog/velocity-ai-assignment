@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import styled from 'styled-components';
 import { FaEdit, FaPoll, FaUpload, FaSave } from 'react-icons/fa';
@@ -152,10 +152,14 @@ const UploadButton = styled.button`
 function ProfilePage() {
     const { user, setUser } = useContext(AuthContext);
     const [isEditing, setIsEditing] = useState(false);
-    const [username, setUsername] = useState(user?.username);
+    const [username, setUsername] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
 
     const handleSave = async () => {
+        if (!profilePicture) {
+            alert('Uploading profile picture, please wait...');
+            return;
+        }
         const formData = new FormData();
         if (profilePicture) {
             formData.append('profilePicture', profilePicture);
@@ -163,8 +167,14 @@ function ProfilePage() {
         formData.append('username', username || user?.username);
         const { data } = await uploadProfile(formData);
         setUser(prevUser => ({ ...prevUser, username: data.username }));
+        setProfilePicture(profilePicture?.profilePicture)
         setIsEditing(false);
     };
+
+    useEffect(() => {
+        setUsername(user?.username);
+        setProfilePicture(user?.profile)
+    }, [user?.username, user?.profile]);
 
     return (
         <Container>

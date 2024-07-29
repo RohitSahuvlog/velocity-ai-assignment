@@ -214,7 +214,7 @@ const VotePoll = ({ poll }) => {
                     <span>{totalVotes} votes</span>
                 </PollInfo>
                 <div>
-                    <LikeButton onClick={handleLike} disabled={hasLiked}>Like ({likes})</LikeButton>
+                    <LikeButton onClick={handleLike} >Like ({likes})</LikeButton>
                 </div>
             </PollDetails>
             {!showResults ? (

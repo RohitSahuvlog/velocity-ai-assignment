@@ -8,7 +8,6 @@ function PollPage() {
     return (
         <div>
             <PollResults pollId={id} />
-            <CommentSection pollId={id} />
         </div>
     );
 }
