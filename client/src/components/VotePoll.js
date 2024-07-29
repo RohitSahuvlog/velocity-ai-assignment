@@ -126,7 +126,7 @@ const Commentsdiv = styled.div`
     overflow-y: auto;
 `;
 
-export const socket = io('https://velocity-ai-assignment.onrender.com/', {
+export const socket = io('http://localhost:5000', {
     query: { token: localStorage.getItem('token') }
 });
 

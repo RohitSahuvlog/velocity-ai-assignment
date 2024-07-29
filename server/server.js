@@ -24,6 +24,9 @@ app.use(formidable({
 
 // Set io on the app instance
 app.set('io', io);
+app.get("/test", function (req, res) {
+    res.send("Hello World");
+});
 
 
 app.use('/api/auth', require('./routes/authRoutes'));
